@@ -4,20 +4,21 @@
 [![Python](https://img.shields.io/badge/python-3.5%2C%203.6-blue.svg?style=flat-square)](https://www.python.org/downloads/)
 [![Discord](https://discordapp.com/api/guilds/129489631539494912/widget.png?style=shield)](https://discord.gg/bots)
 
-MusicBot is the original Discord music bot written in [Python](https://www.python.org "Python homepage") 3.5+, using the [discord.py](https://github.com/Rapptz/discord.py) library. It plays requested songs from YouTube and other services into a Discord server (or multiple servers). Besides, if the queue becomes empty MusicBot will play through a list of existing songs with configuration. The bot features a permission system allowing owners to restrict commands to certain people. As well as playing songs, MusicBot is capable of streaming live media into a voice channel (experimental).
+Just-Some-Bot의 [MusicBot](https://github.com/Just-Some-Bots/MusicBot)을 기반으로 한글화 및 일부 기능이 수정(반복 재생 기능 및 사용성)된 디스코드 뮤직봇입니다. [Python](https://www.python.org "Python homepage") 3.5+ 이상의 환경에서 작동하며, [discord.py](https://github.com/Rapptz/discord.py) 라이브러리를 이용합니다. 
+유튜브와 트위치 등의 미디어 서비스에서 요청한 노래를 디스코드의 음성 채널을 통해 재생합니다. 재생 대기 목록이 비어있는 경우 자동 재생 목록의 노래를 랜덤 재생하는 기능을 제공하며, 유저 그룹별로 사용 권한을 제한할 수도 있습니다. 게다가, 트위치의 라이브 스트리밍을 음성 채널을 통해 재생할 수도 있습니다!(실험단계)
 
 ![Main](https://i.imgur.com/EZljY52.png)
 
-## Setup
-Setting up the MusicBot is relatively painless - just follow one of the [guides](https://just-some-bots.github.io/MusicBot/). After that, configure the bot to ensure its connection to Discord.
+## 설치
+원본 [가이드](https://just-some-bots.github.io/MusicBot/)를 확인해주세요.
 
-The main configuration file is `config/options.ini`, but it is not included by default. Simply make a copy of `example_options.ini` and rename it to `options.ini`. See `example_options.ini` for more information about configurations.
+가이드의 지침대로 설치한 뒤 메인 설정파일인 `config/options.ini`을 구성주세요. `example_options.ini`형태로 저장되어 있는 파일을 `options.ini`로 복사하여 사용하세요.
 
-### Commands
+### 명령어
 
-There are many commands that can be used with the bot. Most notably, the `play <url>` command (preceded by your command prefix) will download, process, and play a song from YouTube or a similar site. A full list of commands is available [here](https://just-some-bots.github.io/MusicBot/using/commands/ "Commands").
+많은 명령어가 포함되어 있습니다. 가장 기본적인 명령어인 `!재생 <url or 검색어>` 명령어가 해당 영상을 다운로드 및 처리하여 음성 채널을 통해 재생합니다. 모든 명령어는 [여기를 확인하세요](https://just-some-bots.github.io/MusicBot/using/commands/ "명령어").
 
-### Further reading
+### 기타 링크
 
 * [Support Discord server](https://discord.gg/bots)
-* [Project license](LICENSE)
+* [프로젝트 라이센스](LICENSE)
