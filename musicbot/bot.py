@@ -2319,8 +2319,9 @@ class MusicBot(discord.Client):
         """
 
         try:
-            float(search_range)=50  # lazy check
-            search_range = min(int(search_range), 1000)
+            search_range=50
+            #float(search_range)  # lazy check
+            #search_range = min(int(search_range), 1000)
         except:
             return Response(self.str.get('cmd-clean-invalid', "Invalid parameter. Please provide a number of messages to search."), reply=True, delete_after=8)
 
