@@ -134,6 +134,9 @@ class MusicPlayer(EventEmitter, Serializable):
         self.emit('entry-added', player=self, playlist=playlist, entry=entry)
 
     def skip(self):
+        if self.bot.config.repeat:
+            log.info("A song was skipped, repeat disabled.")
+            self.bot.config.repeat = False
         self._kill_current_player()
 
     def stop(self):
@@ -190,6 +193,14 @@ class MusicPlayer(EventEmitter, Serializable):
             # I'm not sure that this would ever not be done if it gets to this point
             # unless ffmpeg is doing something highly questionable
             self.emit('error', player=self, entry=entry, ex=self._stderr_future.exception())
+        
+        if not self.is_stopped and not self.is_dead:
+            self.play(_continue=True)
+
+                # Put song back on the queue for repeat
+        if self.bot.config.repeat:
+            self.playlist._add_entry(entry)
+
 
         if not self.bot.config.save_videos and entry:
             if not isinstance(entry, StreamPlaylistEntry):
@@ -219,6 +230,13 @@ class MusicPlayer(EventEmitter, Serializable):
 
         self.emit('finished-playing', player=self, entry=entry)
 
+    def repeat_err(self, popen:subprocess.Popen, future:asyncio.Future):
+        data = popen.stderr.readline()
+        if data:
+            if self.bot.config.repeat:
+                self.bot.config.repeat = not self.bot.config.repeat
+                log.info("A possible error occured, no longer repeating!")
+
     def _kill_current_player(self):
         if self._current_player:
             if self.voice_client.is_paused():
@@ -240,7 +258,7 @@ class MusicPlayer(EventEmitter, Serializable):
         """
             Plays the next entry from the playlist, or resumes playback of the current entry if paused.
         """
-        if self.is_paused and self._current_player:
+        if self.is_paused:
             return self.resume()
 
         if self.is_dead:
@@ -299,6 +317,14 @@ class MusicPlayer(EventEmitter, Serializable):
                 )
 
                 stderr_thread.start()
+
+                reperrcatch = Thread(
+                    target=self.repeat_err,
+                    args=(self._current_player._player.source.original._process, self._stderr_future),
+                    name="stderr reader"
+                )
+
+                reperrcatch.start()
 
                 self.emit('play', player=self, entry=entry)
 
