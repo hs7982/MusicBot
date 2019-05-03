@@ -2557,7 +2557,7 @@ class MusicBot(discord.Client):
         Forces the bot leave the current voice channel.
         """
         await self.disconnect_voice_client(guild)
-        return Response("Disconnected from `{0.name}`".format(guild), delete_after=20)
+        return Response("`{0.name}`에서의 연결이 종료됨".format(guild), delete_after=20)
 
     async def cmd_리붓(self, channel):
         """
