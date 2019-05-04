@@ -149,7 +149,7 @@ class MusicBot(discord.Client):
                 # noinspection PyCallingNonCallable
                 return await func(self, *args, **kwargs)
             else:
-                raise exceptions.PermissionsError("Only dev users can use this command.", expire_in=30)
+                raise exceptions.PermissionsError("개발자만 이 명령어를 사용할 수 있습니다..", expire_in=30)
 
         wrapper.dev_cmd = True
         return wrapper
@@ -428,7 +428,7 @@ class MusicBot(discord.Client):
                 if not create:
                     raise exceptions.CommandError(
                         '봇이 음성채널에 연결중이 아닙니다.  '
-                        'U%s연결 명령어를 이용해보세요.' % self.config.command_prefix)
+                        '%s연결 명령어를 이용해보세요.' % self.config.command_prefix)
 
                 voice_client = await self.get_voice_client(channel)
 
@@ -483,15 +483,15 @@ class MusicBot(discord.Client):
                     player.voice_client.channel.name, entry.meta['author'].name, random.choice(emote_happy), entry.title)
         
             elif self.config.now_playing_mentions:
-                newmsg = '%s - your song `%s` is now playing in `%s`!' % (
+                newmsg = '%s - 신청하신 `%s` 곡이 `%s`에서 재생 중입니다!' % (
                     entry.meta['author'].mention, entry.title, player.voice_client.channel.name)
             else:
                 newmsg = '`%s`채널에서 `%s`님이 요청하신 노래를 재생중입니다 %s\n:point_right: `%s`' % (
                     player.voice_client.channel.name, entry.meta['author'].name, random.choice(emote_happy), entry.title)
         else:
             # no author (and channel), it's an autoplaylist (or autostream from my other PR) entry.
-            newmsg = 'Now playing automatically added entry `%s` in `%s`' % (
-                entry.title, player.voice_client.channel.name)
+            newmsg = '`%s` 채널에서 자동 재생중 입니다: `%s`' % (
+                player.voice_client.channel.name, entry.title)
 
         if newmsg:
             guild = player.voice_client.guild
@@ -1119,7 +1119,7 @@ class MusicBot(discord.Client):
 
     async def cmd_resetplaylist(self, player, channel):
         """
-        Usage:
+        사용법:
             {command_prefix}resetplaylist
 
         Resets all songs in the server's autoplaylist
@@ -1129,12 +1129,12 @@ class MusicBot(discord.Client):
 
     async def cmd_help(self, message, channel, command=None):
         """
-        Usage:
-            {command_prefix}help [command]
+        사용법:
+            {command_prefix}help [명령어]
 
-        Prints a help message.
-        If a command is specified, it prints a help message for that command.
-        Otherwise, it lists the available commands.
+        도움말을 표시합니다.
+        [명령어]가 지정된다면, 해당 명령어에 대한 자세한 도움말 메시지를 표시합니다.
+        지정된 명령어가 없다면, 사용 가능한 명령어를 표시합니다.
         """
         self.commands = []
         self.is_all = False
@@ -1173,11 +1173,11 @@ class MusicBot(discord.Client):
 
     async def cmd_블랙리스트(self, message, user_mentions, option, something):
         """
-        Usage:
-            {command_prefix}blacklist [ + | - | add | remove ] @UserName [@UserName2 ...]
+        사용법:
+            {command_prefix}블랙리스트 [ + | - | add | remove ] @사용자 [@사용자2 ...]
 
-        Add or remove users to the blacklist.
-        Blacklisted users are forbidden from using bot commands.
+        지정된 사용자를 블랙리스트 목록에 추가하거나 제거합니다. 
+        블랙리스트로 지정된 사용자는 봇의 모든 명령어에 대한 사용이 거부됩니다.
         """
 
         if not user_mentions:
@@ -1220,10 +1220,10 @@ class MusicBot(discord.Client):
 
     async def cmd_id(self, author, user_mentions):
         """
-        Usage:
-            {command_prefix}id [@user]
+        사용법:
+            {command_prefix}id [@사용자]
 
-        Tells the user their id or the id of another user.
+        개발자용 도구입니다. 자신 혹은 지정한 사용자의 ID를 표시합니다.
         """
         if not user_mentions:
             return Response(self.str.get('cmd-id-self', 'Your ID is `{0}`').format(author.id), reply=True, delete_after=35)
@@ -1233,10 +1233,10 @@ class MusicBot(discord.Client):
 
     async def cmd_추가(self, player, url=None):
         """
-        Usage:
-            {command_prefix}save [url]
+        사용법:
+            {command_prefix}추가 [url]
 
-        Saves the specified song or current song if not specified to the autoplaylist.
+        자동 재생 목록에 현재 재생중인 곡을 추가하거나, 지정된 URL을 추가합니다.
         """
         if url or (player.current_entry and not isinstance(player.current_entry, StreamPlaylistEntry)):
             if not url:
@@ -1256,9 +1256,9 @@ class MusicBot(discord.Client):
     async def cmd_봇초대(self, message, server_link=None):
         """
         Usage:
-            {command_prefix}joinserver invite_link
+            {command_prefix}봇초대 invite_link
 
-        Asks the bot to join a server.  Note: Bot accounts cannot use invite links.
+        다른 서버에 봇을 초대할 수 있는 링크를 생성합니다.
         """
 
         url = await self.generate_invite_link()
@@ -1267,16 +1267,16 @@ class MusicBot(discord.Client):
             reply=True, delete_after=30
         )
 
-    async def cmd_karaoke(self, player, channel, author):
+    async def cmd_노래방(self, player, channel, author):
         """
         Usage:
-            {command_prefix}karaoke
+            {command_prefix}노래방
 
-        Activates karaoke mode. During karaoke mode, only groups with the BypassKaraokeMode
-        permission in the config file can queue music.
+        노래방 모드를 활성화 합니다. 노래방 모드가 실행되는 동안, 'BypassKaraokeMode'의 권한을 부여받은
+        사용자만이 음악 대기열을 추가할 수 있습니다.
         """
         player.karaoke_mode = not player.karaoke_mode
-        return Response("\N{OK HAND SIGN} Karaoke mode is now " + ['disabled', 'enabled'][player.karaoke_mode], delete_after=15)
+        return Response("\N{OK HAND SIGN} 노래방 모드가 " + ['비활성화 되었습니다.', '활성화 되었습니다.'][player.karaoke_mode], delete_after=15)
 
     async def _do_playlist_checks(self, permissions, player, author, testobj):
         num_songs = sum(1 for _ in testobj)
@@ -1303,16 +1303,13 @@ class MusicBot(discord.Client):
     async def cmd_재생(self, message, player, channel, author, permissions, leftover_args, song_url):
         """
         Usage:
-            {command_prefix}play song_link
-            {command_prefix}play text to search for
-            {command_prefix}play spotify_uri
+            {command_prefix}재생 URL
+            {command_prefix}재생 검색어
+            {command_prefix}재생 Spotify URL
 
-        Adds the song to the playlist.  If a link is not provided, the first
-        result from a youtube search is added to the queue.
-
-        If enabled in the config, the bot will also support Spotify URIs, however
-        it will use the metadata (e.g song name and artist) to find a YouTube
-        equivalent of the song. Streaming from Spotify is not possible.
+        재생 대기열에 노래를 추가합니다.  만약 URL이 아닌 검색어가 입력된 경우,
+        유튜브 검색 결과에서 첫번째 항목을 재생합니다.
+        검색 결과가 원하는 항목이 아닌 경우 URL을 직접 입력하거나 !검색 명령을 이용해보세요.
         """
 
         song_url = song_url.strip('<>')
@@ -1670,13 +1667,13 @@ class MusicBot(discord.Client):
 
     async def cmd_스트리밍(self, player, channel, author, permissions, song_url):
         """
-        Usage:
-            {command_prefix}stream song_link
+        사용법:
+            {command_prefix}스트리밍 URL
 
-        Enqueue a media stream.
-        This could mean an actual stream like Twitch or shoutcast, or simply streaming
-        media without predownloading it.  Note: FFmpeg is notoriously bad at handling
-        streams, especially on poor connections.  You have been warned.
+        라이브 스트리밍을 시작합니다.
+        Twitch 라이브 생방송을 재생 대기열에 추가할 수 있습니다.
+
+        주의: 이 기능은 시험중으로, 시스템이 불안정 할 경우 끊김 현상이 발생할 수 있습니다.
         """
 
         song_url = song_url.strip('<>')
@@ -1698,20 +1695,20 @@ class MusicBot(discord.Client):
 
     async def cmd_검색(self, message, player, channel, author, permissions, leftover_args):
         """
-        Usage:
-            {command_prefix}search [service] [number] query
+        사용법:
+            {command_prefix}검색 [서비스] [숫자] 검색어
 
-        Searches a service for a video and adds it to the queue.
-        - service: any one of the following services:
-            - youtube (yt) (default if unspecified)
+        비디오를 검색하여 대기열에 추가합니다. 참고: 일반적인 재생에서의 검색과는
+        사용자가 직접 검색 결과를 선택할 수 있는 점이 다릅니다.
+        - 서비스: 다음 서비스를 선택할 수 있습니다:
+            - youtube (yt) (기본값)
             - soundcloud (sc)
             - yahoo (yh)
-        - number: return a number of video results and waits for user to choose one
-          - defaults to 3 if unspecified
-          - note: If your search query starts with a number,
-                  you must put your query in quotes
-            - ex: {command_prefix}search 2 "I ran seagulls"
-        The command issuer can use reactions to indicate their response to each result.
+        - 숫자: 지정한 수만큼의 비디오를 검색 합니다.
+          - 기본값은 3입니다.
+          - 참고: 만약 명령이 숫자로 시작한다면, 검색어를 인용문으로 감싸야 합니다.
+            - 예시: {command_prefix}검색 2 "I ran seagulls"
+        검색 결과에 대해 반응을 클릭하여 재생 목록에 추가 할 수 있습니다.
         """
 
         if permissions.max_songs and player.playlist.count_for_user(author) > permissions.max_songs:
@@ -1823,10 +1820,10 @@ class MusicBot(discord.Client):
 
     async def cmd_np(self, player, channel, guild, message):
         """
-        Usage:
+        사용법:
             {command_prefix}np
 
-        Displays the current song in chat.
+        지금 재생 중인 곡을 표시합니다.
         """
 
         if player.current_entry:
@@ -1889,10 +1886,10 @@ class MusicBot(discord.Client):
 
     async def cmd_연결(self, channel, guild, author, voice_channel):
         """
-        Usage:
-            {command_prefix}summon
+        사용법:
+            {command_prefix}연결
 
-        Call the bot to the summoner's voice channel.
+        현재 연결중인 음성채널에 봇을 연결합니다.
         """
 
         if not author.voice:
@@ -1937,10 +1934,10 @@ class MusicBot(discord.Client):
 
     async def cmd_일시중지(self, player):
         """
-        Usage:
-            {command_prefix}pause
+        사용법:
+            {command_prefix}일시중지
 
-        Pauses playback of the current song.
+        재생을 일시 중지합니다.
         """
 
         if player.is_playing:
@@ -1952,10 +1949,10 @@ class MusicBot(discord.Client):
 
     async def cmd_시작(self, player):
         """
-        Usage:
-            {command_prefix}resume
+        사용법:
+            {command_prefix}시작
 
-        Resumes playback of a paused song.
+        일시 중지를 해제하고 재생을 다시 시작합니다.
         """
 
         if player.is_paused:
@@ -1992,9 +1989,9 @@ class MusicBot(discord.Client):
     async def cmd_반복(self, player):
         """
         Usage:
-            {command_prefix}repeat
+            {command_prefix}반복
             
-        Toggles playlist repeat.
+        현재 재생중인 곡을 반복합니다.
         """
         self.config.repeat = not self.config.repeat
         if self.config.repeat:
@@ -2011,10 +2008,10 @@ class MusicBot(discord.Client):
 
     async def cmd_clear(self, player, author):
         """
-        Usage:
+        사용법:
             {command_prefix}clear
 
-        Clears the playlist.
+        재생 대기열을 초기화 합니다.
         """
 
         player.playlist.clear()
@@ -2022,10 +2019,10 @@ class MusicBot(discord.Client):
 
     async def cmd_제거(self, user_mentions, message, author, permissions, channel, player, index=None):
         """
-        Usage:
-            {command_prefix}remove [# in queue]
+        사용법:
+            {command_prefix}제거 [# 대기 순위]
 
-        Removes queued songs. If a number is specified, removes that song in the queue, otherwise removes the most recently queued song.
+        대기열의 노래를 제거합니다. '!재생목록'에서 나타나는 대기 순위를 제공하야 합니다.
         """
 
         if not player.playlist.entries:
@@ -2074,11 +2071,11 @@ class MusicBot(discord.Client):
 
     async def cmd_스킵(self, player, channel, author, message, permissions, voice_channel, param=''):
         """
-        Usage:
-            {command_prefix}skip [force/f]
+        사용법:
+            {command_prefix}스킵 [force/f]
 
-        Skips the current song when enough votes are cast.
-        Owners and those with the instaskip permission can add 'force' or 'f' after the command to force skip.
+        다음 곡으로 건너뛰기 위해 필요한 경우, 투표를 진행합니다.
+        관리자 혹은 권한을 부여받은 사용자는 'force' 혹은 'f'을 통해 투표를 진행하지 않고 강제로 건너뛸 수 있습니다.
         """
 
         if player.is_stopped:
@@ -2155,10 +2152,10 @@ class MusicBot(discord.Client):
     async def cmd_볼륨(self, message, player, new_volume=None):
         """
         Usage:
-            {command_prefix}volume (+/-)[volume]
+            {command_prefix}볼륨 (+/-)[숫자]
 
-        Sets the playback volume. Accepted values are from 1 to 100.
-        Putting + or - before the volume will make the volume change relative to the current volume.
+        재생 볼륨을 설정합니다. 1과 100 사이의 숫자를 입력하거나,
+        + / -를 이용하여 '현재 볼륨 +/- 숫자'로 조정할 수 있습니다.
         """
 
         if not new_volume:
@@ -2255,10 +2252,10 @@ class MusicBot(discord.Client):
 
     async def cmd_재생목록(self, channel, player):
         """
-        Usage:
-            {command_prefix}queue
+        사용법
+            {command_prefix}재생목록
 
-        Prints the current song queue.
+        현재 재생 대기열을 표시합니다.
         """
 
         lines = []
@@ -2312,10 +2309,10 @@ class MusicBot(discord.Client):
 
     async def cmd_정리(self, message, channel, guild, author, search_range=50):
         """
-        Usage:
-            {command_prefix}clean [range]
+        사용법:
+            {command_prefix}정리
 
-        Removes up to [range] messages the bot has posted in chat. Default: 50, Max: 1000
+        채팅창의 봇 메시지를 정리합니다. 범위: 50
         """
 
         try:
@@ -2454,10 +2451,10 @@ class MusicBot(discord.Client):
 
     async def cmd_권한(self, author, user_mentions, channel, guild, permissions):
         """
-        Usage:
-            {command_prefix}perms [@user]
+        사용법:
+            {command_prefix}권한 [@사용자]
 
-        Sends the user a list of their permissions, or the permissions of the user specified.
+        자신 혹은 지정된 사용자의 권한을 표시합니다.
         """
 
         lines = ['%s에서의 권한 정보입니다.\n' % guild.name, '```', '```']
@@ -2551,20 +2548,20 @@ class MusicBot(discord.Client):
 
     async def cmd_연결종료(self, guild):
         """
-        Usage:
-            {command_prefix}disconnect
+        사용법:
+            {command_prefix}연결종료
         
-        Forces the bot leave the current voice channel.
+        현재 음성 채널에서 연결을 종료합니다.
         """
         await self.disconnect_voice_client(guild)
-        return Response("`{0.name}`에서의 연결이 종료됨".format(guild), delete_after=20)
+        return Response("`{0.name}`와의 연결이 종료됨".format(guild), delete_after=20)
 
     async def cmd_리붓(self, channel):
         """
-        Usage:
-            {command_prefix}restart
+        사용법:
+            {command_prefix}리붓
         
-        Restarts the bot.
+        봇을 재시작합니다.
         Will not properly load new dependencies or file updates unless fully shutdown
         and restarted.
         """
