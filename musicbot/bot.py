@@ -490,8 +490,8 @@ class MusicBot(discord.Client):
                     player.voice_client.channel.name, entry.meta['author'].name, random.choice(emote_happy), entry.title)
         else:
             # no author (and channel), it's an autoplaylist (or autostream from my other PR) entry.
-            newmsg = '`%s` 채널에서 자동 재생중 입니다: `%s`' % (
-                player.voice_client.channel.name, entry.title)
+            #newmsg = '`%s` 채널에서 자동 재생중 입니다: `%s`' % (
+            newmsg = ''
 
         if newmsg:
             guild = player.voice_client.guild
