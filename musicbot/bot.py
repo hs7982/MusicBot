@@ -1172,7 +1172,11 @@ class MusicBot(discord.Client):
         return Response(desc, reply=True, delete_after=60)
 
     async def cmd_도움말(self, message, channel, command=None):
-        await self.cmd_연결(self, message, channel, command=None)
+        await self.cmd_help(self, message, channel, command=None)
+        return Response(desc, reply=True, delete_after=60)
+
+    async def cmd_명령어(self, message, channel, command=None):
+        await self.cmd_help(self, message, channel, command=None)
         return Response(desc, reply=True, delete_after=60)
 
     async def cmd_블랙리스트(self, message, user_mentions, option, something):
