@@ -48,7 +48,7 @@ class SpotifyError(MusicbotException):
 class PermissionsError(CommandError):
     @property
     def message(self):
-        return "You don't have permission to use that command.\nReason: " + self._message
+        return "이 명령어를 사용 할 권한이 없습니다.\nError: " + self._message
 
 # Error with pretty formatting for hand-holding users through various errors
 class HelpfulError(MusicbotException):

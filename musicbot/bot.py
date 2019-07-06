@@ -2800,12 +2800,12 @@ class MusicBot(discord.Client):
             if message.author.id != self.config.owner_id:
                 if user_permissions.command_whitelist and command not in user_permissions.command_whitelist:
                     raise exceptions.PermissionsError(
-                        "This command is not enabled for your group ({}).".format(user_permissions.name),
+                        "{}그룹에서 허용된 명령어가 아닙니다.".format(user_permissions.name),
                         expire_in=20)
 
                 elif user_permissions.command_blacklist and command in user_permissions.command_blacklist:
                     raise exceptions.PermissionsError(
-                        "This command is disabled for your group ({}).".format(user_permissions.name),
+                        "{}그룹에서 금지된 명령어입니다.".format(user_permissions.name),
                         expire_in=20)
 
             # Invalid usage, return docstring
