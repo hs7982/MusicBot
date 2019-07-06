@@ -1173,10 +1173,14 @@ class MusicBot(discord.Client):
 
     async def cmd_도움말(self, message, channel, command=None):
         await self.cmd_help(message, channel, command=None)
+        if not self.is_all:
+            desc += self.str.get('cmd-help-all', '\nOnly showing commands you can use, for a list of all commands, run `{}help all`').format(prefix)
         return Response(desc, reply=True, delete_after=60)
 
     async def cmd_명령어(self, message, channel, command=None):
         await self.cmd_help(message, channel, command=None)
+        if not self.is_all:
+            desc += self.str.get('cmd-help-all', '\nOnly showing commands you can use, for a list of all commands, run `{}help all`').format(prefix)
         return Response(desc, reply=True, delete_after=60)
 
     async def cmd_블랙리스트(self, message, user_mentions, option, something):
