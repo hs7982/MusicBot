@@ -1302,7 +1302,7 @@ class MusicBot(discord.Client):
 
     async def cmd_재생(self, message, player, channel, author, permissions, leftover_args, song_url):
         """
-        Usage:
+        사용법:
             {command_prefix}재생 URL
             {command_prefix}재생 검색어
             {command_prefix}재생 Spotify URL
@@ -1568,6 +1568,16 @@ class MusicBot(discord.Client):
         return Response(reply_text, delete_after=30)
 
     async def cmd_p(self, message, player, channel, author, permissions, leftover_args, song_url):
+        """
+        사용법:
+            {command_prefix}재생 URL
+            {command_prefix}재생 검색어
+            {command_prefix}재생 Spotify URL
+
+        재생 대기열에 노래를 추가합니다.  만약 URL이 아닌 검색어가 입력된 경우,
+        유튜브 검색 결과에서 첫번째 항목을 재생합니다.
+        검색 결과가 원하는 항목이 아닌 경우 URL을 직접 입력하거나 !검색 명령을 이용해보세요.
+        """
         re = await self.cmd_재생(message, player, channel, author, permissions, leftover_args, song_url)
         return re
 
