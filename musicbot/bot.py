@@ -1737,7 +1737,7 @@ class MusicBot(discord.Client):
                 # noinspection PyUnresolvedReferences
                 raise exceptions.CommandError(
                     self.str.get('cmd-search-noquery', "Please specify a search query.\n%s") % dedent(
-                        self.cmd_search.__doc__.format(command_prefix=self.config.command_prefix)),
+                        self.cmd_검색.__doc__.format(command_prefix=self.config.command_prefix)),
                     expire_in=60
                 )
 
