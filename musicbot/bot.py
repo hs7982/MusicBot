@@ -479,14 +479,14 @@ class MusicBot(discord.Client):
                 player.skip()
 
             elif self.config.repeat:
-                newmsg = '**반복 재생중** - `%s`채널에서 `%s`님이 요청하신 노래를 반복재생중입니다 %s\n:point_right: `%s`' % (
+                newmsg = '**반복 재생중** - `%s`채널에서 `%s`님이 요청하신 노래를 반복재생중입니다 %s\n:musical_note: `%s`' % (
                     player.voice_client.channel.name, entry.meta['author'].name, random.choice(emote_happy), entry.title)
         
             elif self.config.now_playing_mentions:
                 newmsg = '%s - 신청하신 `%s` 곡이 `%s`에서 재생 중입니다!' % (
                     entry.meta['author'].mention, entry.title, player.voice_client.channel.name)
             else:
-                newmsg = '`%s`채널에서 `%s`님이 요청하신 노래를 재생중입니다 %s\n:point_right: `%s`' % (
+                newmsg = '`%s`채널에서 `%s`님이 요청하신 노래를 재생중입니다 %s\n:musical_note: `%s`' % (
                     player.voice_client.channel.name, entry.meta['author'].name, random.choice(emote_happy), entry.title)
         else:
             # no author (and channel), it's an autoplaylist (or autostream from my other PR) entry.
