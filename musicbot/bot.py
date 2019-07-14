@@ -1127,10 +1127,10 @@ class MusicBot(discord.Client):
         player.autoplaylist = list(set(self.autoplaylist))
         return Response(self.str.get('cmd-resetplaylist-response', '\N{OK HAND SIGN}'), delete_after=15)
 
-    async def cmd_help(self, message, channel, command=None):
+    async def cmd_도움말(self, message, channel, command=None):
         """
         사용법:
-            {command_prefix}help [명령어]
+            {command_prefix}도움말 [명령어]
 
         도움말을 표시합니다.
         [명령어]가 지정된다면, 해당 명령어에 대한 자세한 도움말 메시지를 표시합니다.
@@ -2351,10 +2351,6 @@ class MusicBot(discord.Client):
             if channel.permissions_for(guild.me).manage_messages:
                 deleted = await channel.purge(check=check, limit=search_range, before=message)
                 return Response(self.str.get('cmd-clean-reply', 'Cleaned up {0} message{1}.').format(len(deleted), 's' * bool(deleted)), delete_after=15)
-
-    async def cmd_b(self, message, channel, guild, author, search_range=50):
-        re = await self.cmd_정리(message, channel, guild, author, search_range)
-        return re
 
     async def cmd_pldump(self, channel, author, song_url):
         """
