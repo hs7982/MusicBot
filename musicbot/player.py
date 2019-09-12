@@ -332,14 +332,6 @@ class MusicPlayer(EventEmitter, Serializable):
 
                 stderr_thread.start()
 
-                reperrcatch = Thread(
-                    target=self.repeat_err,
-                    args=(self._current_player._player.source.original._process, self._stderr_future),
-                    name="stderr reader"
-                )
-
-                reperrcatch.start()
-
                 self.emit('play', player=self, entry=entry)
 
     def __json__(self):
