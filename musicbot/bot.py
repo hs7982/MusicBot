@@ -2749,7 +2749,7 @@ class MusicBot(discord.Client):
 
         if isinstance(message.channel, discord.abc.PrivateChannel):
             if not (message.author.id == self.config.owner_id and command == 'joinserver'):
-                await self.safe_send_message(message.channel, 'You cannot use this bot in private messages.')
+                await self.safe_send_message(message.channel, '개인 메시지에서는 기능을 이용할 수 없습니다.')
                 return
 
         if self.config.bound_channels and message.channel.id not in self.config.bound_channels:
