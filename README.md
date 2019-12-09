@@ -6,8 +6,7 @@
 [![Discord](https://discordapp.com/api/guilds/129489631539494912/widget.png?style=shield)](https://discord.gg/bots)
 
 Just-Some-Bot의 [MusicBot](https://github.com/Just-Some-Bots/MusicBot)을 기반으로 한글화 및 일부 기능이 수정(반복 재생 기능 및 사용성)된 디스코드 뮤직봇입니다. [Python](https://www.python.org "Python homepage") 3.5+ 이상의 환경에서 작동하며, [discord.py](https://github.com/Rapptz/discord.py) 라이브러리를 이용합니다. 
-유튜브와 트위치 등의 미디어 서비스에서 요청한 노래를 디스코드의 음성 채널을 통해 재생합니다. 재생 대기 목록이 비어있는 경우 자동 재생 목록의 노래를 랜덤 재생하는 기능을 제공하며, 유저 그룹별로 사용 권한을 제한할 수도 있습니다. 게다가, 트위치의 라이브 스트리밍을 음성 채널을 통해 재생할 수도 있습니다!(실험단계)
--
+
 MusicBot is the original Discord music bot written for [Python](https://www.python.org "Python homepage") 3.5+, using the [discord.py](https://github.com/Rapptz/discord.py) library. It plays requested songs from YouTube and other services into a Discord server (or multiple servers). Besides, if the queue becomes empty MusicBot will play through a list of existing songs with configuration. The bot features a permission system allowing owners to restrict commands to certain people. As well as playing songs, MusicBot is capable of streaming live media into a voice channel (experimental).
 
 ![Main](https://i.imgur.com/FWcHtcS.png)
